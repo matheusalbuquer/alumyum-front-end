@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Logo from "../../assets/images/logo.png";
 import { api } from "../../services/api";
-
+import { NavLink } from "react-router-dom";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,33 +45,35 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4">
+    <div className="flex min-h-screen items-center justify-center  px-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm rounded-2xl border border-slate-800 bg-slate-900 p-8 shadow-2xl"
+        className="w-full max-w-sm rounded-2xl border border-temp-1 bg-white p-8 shadow-2xl"
       >
         {/* Logo */}
-        <div className="mb-8 flex flex-col items-center">
-          <img
-            src={Logo}
-            alt="Alumyum Logo"
-            className="h-14 w-auto"
-          />
+        <div className="  mb-8 flex flex-col items-center">
+          <div className="flex h-20  items-center px-6 align-center gap-2 justify-start">
+            <h1 className="font-['Fira Code'] text-xl font-bold text-temp-1">
+              Cabide
 
-          <h1 className="mt-3 text-2xl font-bold text-white">
-            Alumyum
-          </h1>
+            </h1>
 
-          <p className="mt-2 text-center text-sm text-slate-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B51B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-coat-hanger preview-icon"><path d="M9 5a3 3 0 1 1 5.1 2.1l-1.5 1.5A2 2 0 0 0 12 10v1" /><path d="M4 21a2 2 0 0 1-1.1-3.7L12 11l9.2 6.4A2 2 0 0 1 20 21Z" /></svg>
+
+
+          </div>
+
+
+          <p className="font-['Poppins'] text-center text-sm text-marrom-1 font-semibold ">
             Entre na sua conta para continuar
           </p>
         </div>
 
         {/* E-mail */}
-        <div className="mb-5">
+        <div className=" mb-5 font-['Poppins']">
           <label
             htmlFor="email"
-            className="mb-2 block text-sm font-medium text-slate-300"
+            className="mb-2 block text-sm font-semibold text-temp-1"
           >
             E-mail
           </label>
@@ -83,15 +85,15 @@ function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+            className=" w-full rounded-lg border border-temp-1 bg-bege px-4 py-3 text-sm text-marrom-1 placeholder-marrom-1 outline-none transition focus:border-temp-1 "
           />
         </div>
 
         {/* Senha */}
-        <div className="mb-2">
+        <div className="font-['Poppins'] mb-2 ">
           <label
             htmlFor="password"
-            className="mb-2 block text-sm font-medium text-slate-300"
+            className="mb-2 block text-sm font-medium text-temp-1"
           >
             Senha
           </label>
@@ -103,7 +105,7 @@ function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+            className=" w-full rounded-lg border border-temp-1 bg-bege px-4 py-3 text-sm text-marrom-1 placeholder-marrom-1 outline-none transition focus:border-temp-1 "
           />
         </div>
 
@@ -115,30 +117,30 @@ function LoginForm() {
         )}
 
         {/* Esqueceu a senha */}
-        <div className="mb-6 mt-3 flex justify-end">
+        <div className="font-['Poppins'] mb-6 mt-3 flex justify-end">
           <button
             type="button"
-            className="text-sm text-blue-400 transition hover:text-blue-300"
+            className="font-semibold text-sm cursor-pointer text-marrom-1 transition  hover:text-temp-1"
           >
             Esqueceu a senha?
           </button>
         </div>
 
         {/* Entrar */}
-        <button
+        <NavLink to='/dashboard'
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+          className="font-['Poppins'] bg-bege py-3 px-34.5 cursor-pointer rounded-lg text-sm font-semibold text-temp-1 transition hover:bg-temp-1 hover:text-white disabled:cursor-not-allowed disabled:opacity-50 "
         >
           {loading ? "Entrando..." : "Entrar"}
-        </button>
+        </NavLink>
 
         {/* Cadastro */}
-        <p className="mt-6 text-center text-sm text-slate-400">
+        <p className="font-['Poppins'] font-semibold mt-8 text-center text-sm text-marrom-1">
           Não tem uma conta?{" "}
           <button
             type="button"
-            className="font-medium text-blue-400 transition hover:text-blue-300"
+            className="cursor-pointer  text-marrom-1 transition hover:text-temp-1"
           >
             Cadastre-se
           </button>

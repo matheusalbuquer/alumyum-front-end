@@ -1,1 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Fira+Code:wght@300..700&display=swap');
+
 @import "tailwindcss";
+
+@theme {
+    --color-bege: #efe9e2;
+    --color-bege-2: #a99c8e;
+    --color-marrom-1: #5a463b;
+    --color-preto: #0c0c0d;
+    --color-marrom-2: #2e1c18;
+    --color-temp: #ec2300;
+    --color-temp-1: #B51B00;
+    --color-temp-1-5: #F28B75;
+    --color-temp-2: #2bf16e;
+    --color-branquim: #ffffff;
+    --color-grey: #d8d8d8;
+}

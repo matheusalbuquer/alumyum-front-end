@@ -92,21 +92,21 @@ function ProductForm({
   }
 
   const campoClass =
-    "w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20";
+    "w-full rounded-lg border border-temp-1 bg-bege px-4 py-3 text-sm text-marrom-1 placeholder-marrom-1 outline-none transition  ";
 
   const labelClass =
-    "mb-2 block text-sm font-medium text-slate-300";
+    "mb-2 block text-sm font-semibold text-temp-1";
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-xl border border-slate-800 bg-slate-900 p-6"
+      className="space-y-5 rounded-xl border border-temp-1 bg-white p-6"
     >
-      <div>
-        <h2 className="text-xl font-semibold text-white">
+      <div className="font-['Poppins']">
+        <h2 className="text-xl font-semibold text-temp-1">
           Cadastrar produto
         </h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-marrom-1 font-semibold">
           Preencha os dados do produto para adicioná-lo ao catálogo.
         </p>
       </div>
@@ -155,24 +155,24 @@ function ProductForm({
           Imagem do produto
         </label>
 
-        <div className="rounded-xl border border-dashed border-slate-700 bg-slate-800/50 p-5">
+        <div className="rounded-xl border border-dashed border-temp-1 bg-bege p-5">
           <label
             htmlFor="imagem"
-            className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg p-4 transition hover:bg-slate-800"
+            className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg p-4 transition hover:bg-temp-1-5"
           >
             {previewImagem ? (
               <img
                 src={previewImagem}
                 alt="Prévia do produto"
-                className="h-40 w-40 rounded-xl border border-slate-700 object-cover"
+                className="h-40 w-40 rounded-xl border border-temp-1 object-cover"
               />
             ) : (
               <>
                 <span className="text-4xl">📷</span>
-                <span className="text-sm font-medium text-white">
+                <span className="text-sm font-medium text-temp-1">
                   Clique para selecionar uma imagem
                 </span>
-                <span className="text-xs text-slate-400">
+                <span className="text-xs text-marrom-1">
                   PNG, JPG ou WEBP — máximo de 5 MB
                 </span>
               </>
@@ -189,7 +189,7 @@ function ProductForm({
 
           {previewImagem && (
             <div className="mt-3 flex flex-wrap items-center justify-center gap-4">
-              <span className="max-w-xs truncate text-sm text-slate-400">
+              <span className="max-w-xs truncate text-sm text-marrom-2">
                 {imagem?.name}
               </span>
 
@@ -201,7 +201,7 @@ function ProductForm({
                   const input = document.getElementById("imagem");
                   if (input) input.value = "";
                 }}
-                className="text-sm text-red-400 hover:text-red-300"
+                className="cursor-pointer text-sm text-red-400 hover:text-red-300"
               >
                 Remover imagem
               </button>
@@ -248,30 +248,30 @@ function ProductForm({
         </div>
       </div>
 
-      <p className="text-xs text-slate-500">
+      <p className="text-xs text-marrom-1 font-semibold font-['Poppins']">
         * Campos obrigatórios. A imagem será selecionada e enviada junto aos
         dados, mas o backend ainda precisa oferecer suporte ao upload.
       </p>
 
-      <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
-       <button
+      <div className="font-['Poppins'] flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+        <button
           type="button"
           onClick={onCancelar}
           disabled={salvando}
-          className="rounded-lg border border-slate-700 px-5 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 disabled:opacity-50"
+          className="rounded-lg bg-bege cursor-pointer px-5 py-3 text-sm font-medium text-temp-1 transition hover:bg-temp-1 hover:text-white disabled:opacity-50"
         >
           Cancelar
         </button>
 
-        
 
-          <button
-            type="submit"
-            disabled={salvando}
-            className="rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {salvando ? "Cadastrando..." : "Cadastrar produto"}
-          </button>
+
+        <button
+          type="submit"
+          disabled={salvando}
+          className="cursor-pointer rounded-lg bg-temp px-5 py-3 text-sm font-semibold text-white transition hover:bg-temp-1 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {salvando ? "Cadastrando..." : "Cadastrar produto"}
+        </button>
       </div>
     </form>
   );

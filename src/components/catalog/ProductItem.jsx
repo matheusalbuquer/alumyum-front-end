@@ -14,9 +14,8 @@ function ProductItem({ product, onEditar, onExcluir }) {
   const imagemUrl = product.imagemUrl
     ? product.imagemUrl.startsWith("http")
       ? product.imagemUrl
-      : `http://localhost:8081${
-          product.imagemUrl.startsWith("/") ? "" : "/"
-        }${product.imagemUrl}`
+      : `http://localhost:8081${product.imagemUrl.startsWith("/") ? "" : "/"
+      }${product.imagemUrl}`
     : "";
 
   const statusClass = !product.ativo
@@ -39,7 +38,7 @@ function ProductItem({ product, onEditar, onExcluir }) {
     <article className="rounded-xl border border-slate-800 bg-slate-900 transition hover:border-slate-700">
       <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center">
         {/* Imagem do produto */}
-        <div className="flex h-24 w-full shrink-0 items-center justify-center overflow-hidden rounded-lg bg-slate-800 sm:w-24">
+        <div className="flex h-24 w-full shrink-0 items-center justify-center overflow-hidden rounded-lg bg-bege sm:w-24">
           {imagemUrl && !erroImagem ? (
             <img
               src={imagemUrl}
@@ -65,7 +64,7 @@ function ProductItem({ product, onEditar, onExcluir }) {
             {product.nome || "Produto sem nome"}
           </h3>
 
-          <p className="mt-1 line-clamp-2 text-sm text-slate-400">
+          <p className="mt-1 line-clamp-2 text-sm text-marrom-1">
             {product.descricao?.trim() || "Sem descrição cadastrada"}
           </p>
 
@@ -81,9 +80,9 @@ function ProductItem({ product, onEditar, onExcluir }) {
           <p className="text-lg font-bold text-white">
             {Number.isFinite(preco)
               ? preco.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })
+                style: "currency",
+                currency: "BRL",
+              })
               : "Preço indisponível"}
           </p>
 

@@ -53,8 +53,8 @@ function ConversationList({
 
   return (
     <div className="flex h-full flex-col">
-      <div className="border-b border-slate-800 p-5">
-        <h1 className="text-xl font-semibold text-white">
+      <div className="border-b border-slate-800 p-5 mt-3 ml-2">
+        <h1 className=" font-['Poppins'] text-2xl font-bold text-white  ">
           Conversas
         </h1>
         <p className="mt-1 text-sm text-slate-500">

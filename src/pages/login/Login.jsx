@@ -3,7 +3,7 @@ import LoginForm from "../../components/login/LoginForm";
 
 function Login() {
   return (
-    <div className=" bg-blue-950">
+    <div className=" bg-bege">
       <LoginForm />
     </div>
   );

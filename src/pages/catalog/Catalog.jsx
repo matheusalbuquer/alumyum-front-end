@@ -61,7 +61,7 @@ function Catalog() {
   }
 
   return (
-    <div className="flex h-screen bg-slate-950">
+    <div className="flex h-screen ">
       <Sidebar />
 
       <main className="min-w-0 flex-1 overflow-y-auto p-6 md:p-8">
@@ -94,18 +94,18 @@ function Catalog() {
             </div>
           )}
 
-          
-        {mostrarFormulario && (
-          <ProductForm
-            onSalvar={handleSalvarProduto}
-            onCancelar={() => setMostrarFormulario(false)}
-            salvando={salvando}
-          />
-        )}
+
+          {mostrarFormulario && (
+            <ProductForm
+              onSalvar={handleSalvarProduto}
+              onCancelar={() => setMostrarFormulario(false)}
+              salvando={salvando}
+            />
+          )}
 
           <section className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-white">
+              <h2 className="text-lg font-semibold font-['Poppins'] text-white">
                 Produtos cadastrados
               </h2>
 

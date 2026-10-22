@@ -1,3 +1,4 @@
+
 import {
   LayoutDashboard,
   MessageCircle,
@@ -6,7 +7,13 @@ import {
   BarChart3,
   Bot,
   Settings,
+  QrCode,
+
+
+
 } from "lucide-react";
+
+import { NavLink } from "react-router-dom";
 
 function Sidebar() {
   const menuItems = [
@@ -28,12 +35,12 @@ function Sidebar() {
     {
       label: "Pedidos",
       icon: Package,
-      path: "/pedidos",
+      path: "/orders",
     },
     {
       label: "Relatórios",
       icon: BarChart3,
-      path: "/relatorios",
+      path: "/reports",
     },
     {
       label: "IA",
@@ -41,59 +48,78 @@ function Sidebar() {
       path: "/ia",
     },
     {
+      label: "Whatsapp",
+      icon: QrCode,
+      path: "/whatsapp",
+    },
+    {
       label: "Configurações",
       icon: Settings,
-      path: "/configuracoes",
+      path: "/settings",
     },
   ];
 
   return (
-    <aside className="flex h-screen w-64 flex-col border-r border-slate-800 bg-slate-950">
+    <aside className="flex sticky h-screen w-64 flex-col border-r border-temp-1 bg-white">
       {/* Logo */}
-      <div className="flex h-20 items-center px-6">
-        <h1 className="text-xl font-bold text-white">
-          Alum<span className="text-green-500">Yum</span>
+      <div className="flex h-20 mb-4 items-center px-6 align-center gap-2 justify-start">
+        <h1 className="font-['Fira Code'] text-xl font-bold text-temp-1">
+          Cabide
+
         </h1>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B51B00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-coat-hanger preview-icon"><path d="M9 5a3 3 0 1 1 5.1 2.1l-1.5 1.5A2 2 0 0 0 12 10v1" /><path d="M4 21a2 2 0 0 1-1.1-3.7L12 11l9.2 6.4A2 2 0 0 1 20 21Z" /></svg>
+
+
       </div>
 
       {/* Menu */}
-      <nav className="flex-1 px-3">
+      <nav className="flex-1 px-3 ">
         {menuItems.map((item) => {
           const Icon = item.icon;
 
           return (
-            <a
+
+            <NavLink
+
               key={item.label}
-              href={item.path}
-              className="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-white"
+              to={item.path}
+
+              className={({ isActive }) =>
+                `mb-1 flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-marrom-2 transition hover:bg-bege hover:text-temp-1 ${isActive
+                  ? 'bg-temp-1 hover:bg-temp-1 hover:text-white text-white'
+                  : ''}`
+
+              }
             >
               <Icon size={18} />
 
               <span>{item.label}</span>
-            </a>
+            </ NavLink>
           );
         })}
       </nav>
 
       {/* Usuário */}
-      <div className="border-t border-slate-800 p-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-800 text-sm font-semibold text-white">
+      <div className="border-t border-temp-1 p-4">
+        <div className=" flex items-center gap-3">
+          <div className="cursor-pointer hover:border border-temp-1 flex h-9 w-9 items-center justify-center rounded-full bg-bege text-sm font-semibold text-temp-1">
             M
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-white">Matheus</p>
+            <p className="font-['Poppins'] text-sm font-semibold text-temp-1">Matheus</p>
 
             <p className="text-xs text-slate-500">Administrador</p>
           </div>
         </div>
 
-        <button className="mt-4 w-full rounded-lg border border-slate-800 py-2 text-sm text-slate-400 transition hover:bg-slate-900 hover:text-white">
+        <NavLink to="/"
+          className="mt-4 flex items-center justify-center p-1 cursor-pointer rounded-lg py-2 text-sm font-['Poppins'] font-medium text-temp-1 transition bg-bege hover:bg-temp-1 hover:text-white">
           Sair
-        </button>
+        </NavLink>
       </div>
-    </aside>
+    </aside >
   );
 }
 

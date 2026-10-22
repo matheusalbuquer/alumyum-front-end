@@ -19,21 +19,21 @@ const stats = [
 
 function CatalogStats() {
   return (
-    <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    <section className="font-['Poppins'] grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
       {stats.map((stat) => (
         <article
           key={stat.label}
-          className="rounded-xl border border-slate-800 bg-slate-900 p-5"
+          className="cursor-pointer rounded-xl border border-bege  p-5"
         >
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-marrom-1 font-semibold">
             {stat.label}
           </p>
 
-          <p className="mt-3 text-3xl font-bold text-white">
+          <p className="mt-3 text-3xl font-bold text-temp-1">
             {stat.value}
           </p>
 
-          <p className="mt-2 text-xs text-slate-500">
+          <p className="font-semibold mt-2 text-xs text-marrom-1">
             {stat.description}
           </p>
         </article>

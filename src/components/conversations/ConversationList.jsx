@@ -19,7 +19,8 @@ function ConversationList({
         const data = await listarConversas();
 
         if (ativo) {
-          setConversations(data.content ?? []);
+          
+          setConversations(Array.isArray(data) ? data : data.content ?? []);
           setError("");
         }
       } catch (err) {

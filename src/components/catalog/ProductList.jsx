@@ -1,8 +1,8 @@
 
 import ProductItem from "./ProductItem";
 
-function ProductList({ products, onEditar, onExcluir }) {
-  if (products.length === 0) {
+function ProductList({ products = [], onEditar, onExcluir }) {
+  if (!Array.isArray(products) || products.length === 0) {
     return (
       <div className="rounded-xl border border-temp-1 bg-bege px-6 py-12 text-center">
         <div className="mb-3 text-4xl">📦</div>

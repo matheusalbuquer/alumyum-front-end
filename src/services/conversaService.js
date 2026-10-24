@@ -1,3 +1,4 @@
+
 import { api } from "./api";
 
 export async function listarConversas(page = 0, size = 20) {
@@ -9,7 +10,9 @@ export async function listarConversas(page = 0, size = 20) {
     throw new Error("Erro ao carregar as conversas.");
   }
 
-  return response.json();
+  const data = await response.json();
+
+  return Array.isArray(data) ? data : data.content ?? [];
 }
 
 export async function listarMensagens(conversaId, page = 0, size = 100) {
@@ -22,5 +25,6 @@ export async function listarMensagens(conversaId, page = 0, size = 100) {
   }
 
   const data = await response.json();
-  return data.content ?? [];
+
+  return Array.isArray(data) ? data : data.content ?? [];
 }

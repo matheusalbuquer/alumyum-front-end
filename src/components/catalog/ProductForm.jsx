@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 
 function ProductForm({
@@ -9,9 +8,12 @@ function ProductForm({
   const [formulario, setFormulario] = useState({
     nome: "",
     descricao: "",
-    estoque: "",
     preco: "",
   });
+
+  const [variacoes, setVariacoes] = useState([
+    { sku: "", cor: "", tamanho: "", estoque: "0", preco: "" },
+  ]);
 
   const [erro, setErro] = useState("");
   const [imagem, setImagem] = useState(null);
@@ -32,6 +34,29 @@ function ProductForm({
       ...anterior,
       [name]: value,
     }));
+  }
+
+  function handleVariacaoChange(index, event) {
+    const { name, value } = event.target;
+
+    setVariacoes((anterior) =>
+      anterior.map((variacao, i) =>
+        i === index ? { ...variacao, [name]: value } : variacao
+      )
+    );
+  }
+
+  function adicionarVariacao() {
+    setVariacoes((anterior) => [
+      ...anterior,
+      { sku: "", cor: "", tamanho: "", estoque: "0", preco: "" },
+    ]);
+  }
+
+  function removerVariacao(index) {
+    setVariacoes((anterior) =>
+      anterior.filter((_, i) => i !== index)
+    );
   }
 
   function handleImagemChange(event) {
@@ -74,25 +99,62 @@ function ProductForm({
       return;
     }
 
-    if (
-      formulario.estoque.trim() === "" ||
-      !/^\d+$/.test(formulario.estoque)
-    ) {
-      setErro("Informe uma quantidade de estoque válida.");
+    if (variacoes.length === 0) {
+      setErro("Adicione pelo menos uma variação.");
       return;
+    }
+
+    const skus = variacoes.map((variacao) => variacao.sku.trim());
+
+    if (skus.some((sku) => !sku)) {
+      setErro("Informe o SKU de todas as variações.");
+      return;
+    }
+
+    if (new Set(skus).size !== skus.length) {
+      setErro("Cada variação deve ter um SKU diferente.");
+      return;
+    }
+
+    for (let i = 0; i < variacoes.length; i++) {
+      const variacao = variacoes[i];
+
+      if (
+        variacao.estoque.trim() === "" ||
+        !/^\d+$/.test(variacao.estoque)
+      ) {
+        setErro(`Informe um estoque válido para a variação ${i + 1}.`);
+        return;
+      }
+
+      if (
+        variacao.preco !== "" &&
+        (!Number.isFinite(Number(variacao.preco)) ||
+          Number(variacao.preco) < 0)
+      ) {
+        setErro(`Informe um preço válido para a variação ${i + 1}.`);
+        return;
+      }
     }
 
     onSalvar({
       nome: formulario.nome.trim(),
       descricao: formulario.descricao.trim(),
-      estoque: formulario.estoque,
       preco: Number(formulario.preco),
+      variacoes: variacoes.map((variacao) => ({
+        sku: variacao.sku.trim(),
+        cor: variacao.cor.trim(),
+        tamanho: variacao.tamanho.trim(),
+        estoque: Number(variacao.estoque),
+        preco:
+          variacao.preco === "" ? null : Number(variacao.preco),
+      })),
       imagem,
     });
   }
 
   const campoClass =
-    "w-full rounded-lg border border-temp-1 bg-bege px-4 py-3 text-sm text-marrom-1 placeholder-marrom-1 outline-none transition  ";
+    "w-full rounded-lg border border-temp-1 bg-bege px-4 py-3 text-sm text-marrom-1 placeholder-marrom-1 outline-none transition focus:ring-2 focus:ring-temp-1/20";
 
   const labelClass =
     "mb-2 block text-sm font-semibold text-temp-1";
@@ -100,21 +162,21 @@ function ProductForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-xl border border-temp-1 bg-white p-6"
+      className="space-y-5 rounded-xl border border-temp-1 bg-white p-6 font-['Poppins']"
     >
-      <div className="font-['Poppins']">
+      <div>
         <h2 className="text-xl font-semibold text-temp-1">
           Cadastrar produto
         </h2>
-        <p className="mt-1 text-sm text-marrom-1 font-semibold">
-          Preencha os dados do produto para adicioná-lo ao catálogo.
+        <p className="mt-1 text-sm font-semibold text-marrom-1">
+          Preencha os dados do produto e suas variações.
         </p>
       </div>
 
       {erro && (
         <p
           role="alert"
-          className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-400"
+          className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-500"
         >
           {erro}
         </p>
@@ -129,7 +191,7 @@ function ProductForm({
           name="nome"
           value={formulario.nome}
           onChange={handleChange}
-          placeholder="Ex.: Fone Bluetooth"
+          placeholder="Ex.: Camiseta básica"
           className={campoClass}
           required
         />
@@ -158,7 +220,7 @@ function ProductForm({
         <div className="rounded-xl border border-dashed border-temp-1 bg-bege p-5">
           <label
             htmlFor="imagem"
-            className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg p-4 transition hover:bg-temp-1-5"
+            className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg p-4 transition hover:bg-temp-1/5"
           >
             {previewImagem ? (
               <img
@@ -189,7 +251,7 @@ function ProductForm({
 
           {previewImagem && (
             <div className="mt-3 flex flex-wrap items-center justify-center gap-4">
-              <span className="max-w-xs truncate text-sm text-marrom-2">
+              <span className="max-w-xs truncate text-sm text-marrom-1">
                 {imagem?.name}
               </span>
 
@@ -201,7 +263,7 @@ function ProductForm({
                   const input = document.getElementById("imagem");
                   if (input) input.value = "";
                 }}
-                className="cursor-pointer text-sm text-red-400 hover:text-red-300"
+                className="cursor-pointer text-sm text-red-500 hover:text-red-700"
               >
                 Remover imagem
               </button>
@@ -210,60 +272,169 @@ function ProductForm({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <div>
-          <label htmlFor="preco" className={labelClass}>
-            Preço (R$) *
-          </label>
-          <input
-            id="preco"
-            name="preco"
-            type="number"
-            min="0"
-            step="0.01"
-            value={formulario.preco}
-            onChange={handleChange}
-            placeholder="0,00"
-            className={campoClass}
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="estoque" className={labelClass}>
-            Quantidade em estoque *
-          </label>
-          <input
-            id="estoque"
-            name="estoque"
-            type="number"
-            min="0"
-            step="1"
-            value={formulario.estoque}
-            onChange={handleChange}
-            placeholder="Ex.: 25"
-            className={campoClass}
-            required
-          />
-        </div>
+      <div>
+        <label htmlFor="preco" className={labelClass}>
+          Preço padrão (R$) *
+        </label>
+        <input
+          id="preco"
+          name="preco"
+          type="number"
+          min="0"
+          step="0.01"
+          value={formulario.preco}
+          onChange={handleChange}
+          placeholder="0,00"
+          className={campoClass}
+          required
+        />
+        <p className="mt-1 text-xs text-marrom-1">
+          Será utilizado nas variações sem preço próprio.
+        </p>
       </div>
 
-      <p className="text-xs text-marrom-1 font-semibold font-['Poppins']">
-        * Campos obrigatórios. A imagem será selecionada e enviada junto aos
-        dados, mas o backend ainda precisa oferecer suporte ao upload.
+      <div className="space-y-4 border-t border-temp-1/20 pt-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h3 className="text-lg font-semibold text-temp-1">
+              Variações do produto
+            </h3>
+            <p className="mt-1 text-sm text-marrom-1">
+              Cada variação possui seu próprio SKU e estoque.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={adicionarVariacao}
+            className="cursor-pointer rounded-lg border border-temp-1 px-4 py-2 text-sm font-semibold text-temp-1 transition hover:bg-bege"
+          >
+            + Adicionar variação
+          </button>
+        </div>
+
+        {variacoes.map((variacao, index) => (
+          <div
+            key={index}
+            className="space-y-4 rounded-xl border border-temp-1/30 bg-bege/50 p-4"
+          >
+            <div className="flex items-center justify-between">
+              <h4 className="font-semibold text-temp-1">
+                Variação {index + 1}
+              </h4>
+
+              {variacoes.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removerVariacao(index)}
+                  className="cursor-pointer text-sm font-medium text-red-500 hover:text-red-700"
+                >
+                  Remover
+                </button>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor={`sku-${index}`} className={labelClass}>
+                SKU *
+              </label>
+              <input
+                id={`sku-${index}`}
+                name="sku"
+                value={variacao.sku}
+                onChange={(event) => handleVariacaoChange(index, event)}
+                placeholder="Ex.: CAM-PRE-P"
+                className={campoClass}
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label htmlFor={`cor-${index}`} className={labelClass}>
+                  Cor
+                </label>
+                <input
+                  id={`cor-${index}`}
+                  name="cor"
+                  value={variacao.cor}
+                  onChange={(event) => handleVariacaoChange(index, event)}
+                  placeholder="Ex.: Preto"
+                  className={campoClass}
+                />
+              </div>
+
+              <div>
+                <label htmlFor={`tamanho-${index}`} className={labelClass}>
+                  Tamanho
+                </label>
+                <input
+                  id={`tamanho-${index}`}
+                  name="tamanho"
+                  value={variacao.tamanho}
+                  onChange={(event) => handleVariacaoChange(index, event)}
+                  placeholder="Ex.: P, M, G ou 40"
+                  className={campoClass}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label htmlFor={`estoque-${index}`} className={labelClass}>
+                  Quantidade em estoque *
+                </label>
+                <input
+                  id={`estoque-${index}`}
+                  name="estoque"
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={variacao.estoque}
+                  onChange={(event) => handleVariacaoChange(index, event)}
+                  className={campoClass}
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor={`preco-variacao-${index}`}
+                  className={labelClass}
+                >
+                  Preço próprio (R$)
+                </label>
+                <input
+                  id={`preco-variacao-${index}`}
+                  name="preco"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={variacao.preco}
+                  onChange={(event) => handleVariacaoChange(index, event)}
+                  placeholder="Usar preço padrão"
+                  className={campoClass}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p className="text-xs font-semibold text-marrom-1">
+        * Campos obrigatórios. O estoque é controlado separadamente para cada
+        variação.
       </p>
 
-      <div className="font-['Poppins'] flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+      <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
         <button
           type="button"
           onClick={onCancelar}
           disabled={salvando}
-          className="rounded-lg bg-bege cursor-pointer px-5 py-3 text-sm font-medium text-temp-1 transition hover:bg-temp-1 hover:text-white disabled:opacity-50"
+          className="cursor-pointer rounded-lg bg-bege px-5 py-3 text-sm font-medium text-temp-1 transition hover:bg-temp-1 hover:text-white disabled:opacity-50"
         >
           Cancelar
         </button>
-
-
 
         <button
           type="submit"

@@ -127,13 +127,15 @@ function LoginForm() {
         </div>
 
         {/* Entrar */}
-        <NavLink to='/dashboard'
-          type="submit"
-          disabled={loading}
-          className="font-['Poppins'] bg-bege py-3 px-34.5 cursor-pointer rounded-lg text-sm font-semibold text-temp-1 transition hover:bg-temp-1 hover:text-white disabled:cursor-not-allowed disabled:opacity-50 "
-        >
-          {loading ? "Entrando..." : "Entrar"}
-        </NavLink>
+       
+<button
+  type="submit"
+  disabled={loading}
+  className="font-['Poppins'] w-full rounded-lg bg-bege px-6 py-3 text-sm font-semibold text-temp-1 transition hover:bg-temp-1 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+>
+  {loading ? "Entrando..." : "Entrar"}
+</button>
+
 
         {/* Cadastro */}
         <p className="font-['Poppins'] font-semibold mt-8 text-center text-sm text-marrom-1">

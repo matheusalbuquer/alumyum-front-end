@@ -21,21 +21,47 @@ function Catalog() {
   const [erro, setErro] = useState("");
   const [sucesso, setSucesso] = useState("");
 
-  async function carregarProdutos() {
-    setCarregando(true);
-    setErro("");
+ 
 
-    try {
-      const resposta = await listarProdutos();
 
-      // O Spring Data Page retorna os itens dentro de "content".
-      setProdutos(resposta.content ?? []);
-    } catch (error) {
-      setErro(error.message || "Não foi possível carregar os produtos.");
-    } finally {
-      setCarregando(false);
+
+async function carregarProdutos() {
+  setCarregando(true);
+  setErro("");
+
+  try {
+    const resultado = await listarProdutos();
+
+    console.log("Resultado completo:", resultado);
+    console.log("Tipo:", typeof resultado);
+    console.log("É array?", Array.isArray(resultado));
+
+    const lista = Array.isArray(resultado)
+      ? resultado
+      : Array.isArray(resultado?.content)
+        ? resultado.content
+        : null;
+
+    if (lista === null) {
+      console.error("Formato inesperado recebido:", resultado);
+      throw new Error(
+        "A API não retornou uma lista de produtos válida."
+      );
     }
+
+    console.log("Quantidade:", lista.length);
+    console.table(lista);
+
+    setProdutos(lista);
+  } catch (error) {
+    console.error("Erro ao carregar produtos:", error);
+    setErro(error.message || "Não foi possível carregar os produtos.");
+    setProdutos([]);
+  } finally {
+    setCarregando(false);
   }
+}
+
 
   useEffect(() => {
     carregarProdutos();

@@ -4,19 +4,33 @@ import { useState } from "react";
 function ProductItem({ product, onEditar, onExcluir }) {
   const [erroImagem, setErroImagem] = useState(false);
 
-  const estoque = Number(product.estoque) || 0;
-  const preco = Number(product.preco);
+  const variacoes = Array.isArray(product.variacoes)
+    ? product.variacoes
+    : [];
 
+  
+  const estoque = Array.isArray(product.variacoes)
+  ? product.variacoes.reduce(
+      (total, variacao) => total + (Number(variacao.estoque) || 0),
+      0
+    )
+  : Number(product.estoque) || 0;
+
+  const preco = Number(product.preco);
   const estoqueBaixo = estoque > 0 && estoque <= 5;
   const semEstoque = estoque === 0;
 
-  // Monta a URL completa da imagem do backend.
-  const imagemUrl = product.imagemUrl
-    ? product.imagemUrl.startsWith("http")
-      ? product.imagemUrl
-      : `http://localhost:8081${product.imagemUrl.startsWith("/") ? "" : "/"
+ 
+const imagemUrl = product.imagemUrl
+  ? product.imagemUrl.startsWith("http")
+    ? product.imagemUrl
+    : `http://localhost:8080${
+        product.imagemUrl.startsWith("/")
+          ? ""
+          : "/"
       }${product.imagemUrl}`
-    : "";
+  : "";
+
 
   const statusClass = !product.ativo
     ? "bg-slate-700 text-slate-300"
@@ -37,7 +51,6 @@ function ProductItem({ product, onEditar, onExcluir }) {
   return (
     <article className="rounded-xl border border-slate-800 bg-slate-900 transition hover:border-slate-700">
       <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center">
-        {/* Imagem do produto */}
         <div className="flex h-24 w-full shrink-0 items-center justify-center overflow-hidden rounded-lg bg-bege sm:w-24">
           {imagemUrl && !erroImagem ? (
             <img
@@ -58,7 +71,6 @@ function ProductItem({ product, onEditar, onExcluir }) {
           )}
         </div>
 
-        {/* Informações do produto */}
         <div className="min-w-0 flex-1">
           <h3 className="truncate font-semibold text-white">
             {product.nome || "Produto sem nome"}
@@ -73,25 +85,34 @@ function ProductItem({ product, onEditar, onExcluir }) {
           >
             {statusTexto}
           </span>
+
+          <p className="mt-2 text-xs text-slate-400">
+            {variacoes.length}{" "}
+            {variacoes.length === 1 ? "variação" : "variações"}
+            {variacoes.length > 0 &&
+              ` · ${[
+                ...new Set(
+                  variacoes.map((v) => v.tamanho).filter(Boolean)
+                ),
+              ].join(", ")}`}
+          </p>
         </div>
 
-        {/* Preço e estoque */}
         <div className="shrink-0 sm:min-w-36">
           <p className="text-lg font-bold text-white">
             {Number.isFinite(preco)
               ? preco.toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              })
+                  style: "currency",
+                  currency: "BRL",
+                })
               : "Preço indisponível"}
           </p>
 
           <p className="mt-1 text-sm text-slate-400">
-            Estoque: {estoque}
+            Estoque total: {estoque}
           </p>
         </div>
 
-        {/* Ações */}
         <div className="flex shrink-0 gap-2 sm:flex-col">
           <button
             type="button"
@@ -104,7 +125,7 @@ function ProductItem({ product, onEditar, onExcluir }) {
 
           <button
             type="button"
-            onClick={() => onExcluir?.(product.id)}
+            onClick={() => onExcluir?.(product)}
             className="rounded-lg border border-red-900/50 px-3 py-2 text-sm text-red-400 transition hover:bg-red-500/10"
             aria-label={`Excluir ${product.nome}`}
           >

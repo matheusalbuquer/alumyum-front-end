@@ -101,7 +101,7 @@ const imagemUrl = product.imagemUrl
         </div>
 
         <div className="shrink-0 sm:min-w-36">
-          <p className="text-lg font-bold text-white">
+          <p className="text-lg font-bold text-black">
             {Number.isFinite(preco)
               ? preco.toLocaleString("pt-BR", {
                   style: "currency",

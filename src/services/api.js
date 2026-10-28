@@ -1,5 +1,4 @@
 
-
 const API_URL = "http://localhost:8080";
 
 export async function api(endpoint, options = {}) {
@@ -13,7 +12,10 @@ export async function api(endpoint, options = {}) {
     headers["Content-Type"] = "application/json";
   }
 
-  if (token) {
+  // Nunca envia um JWT antigo para o endpoint de login.
+  const endpointPublico = endpoint === "/auth/login";
+
+  if (token && !endpointPublico) {
     headers.Authorization = `Bearer ${token}`;
   }
 

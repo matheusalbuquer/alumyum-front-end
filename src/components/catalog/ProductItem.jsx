@@ -49,7 +49,9 @@ const imagemUrl = product.imagemUrl
         : "Em estoque";
 
   return (
-    <article className="rounded-xl border border-slate-800 bg-slate-900 transition hover:border-slate-700">
+    
+    <article className="rounded-xl border border-gray-200 bg-white transition hover:border-red-600 hover:shadow-md">
+
       <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center">
         <div className="flex h-24 w-full shrink-0 items-center justify-center overflow-hidden rounded-lg bg-bege sm:w-24">
           {imagemUrl && !erroImagem ? (
@@ -72,7 +74,7 @@ const imagemUrl = product.imagemUrl
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="truncate font-semibold text-white">
+          <h3 className="truncate font-semibold text-black">
             {product.nome || "Produto sem nome"}
           </h3>
 

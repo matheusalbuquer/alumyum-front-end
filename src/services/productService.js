@@ -32,6 +32,7 @@ async function interpretarResposta(response, operacao) {
   }
 }
 
+
 export async function cadastrarProduto(dadosProduto) {
   const formData = new FormData();
 
@@ -39,6 +40,8 @@ export async function cadastrarProduto(dadosProduto) {
     nome: dadosProduto.nome,
     descricao: dadosProduto.descricao,
     preco: Number(dadosProduto.preco),
+    nomeCategoria: dadosProduto.nomeCategoria,
+
     variacoes: (dadosProduto.variacoes || []).map((variacao) => ({
       sku: variacao.sku,
       cor: variacao.cor,
@@ -78,6 +81,7 @@ export async function cadastrarProduto(dadosProduto) {
 
   return interpretarResposta(response, "cadastrar produto");
 }
+
 
 
 

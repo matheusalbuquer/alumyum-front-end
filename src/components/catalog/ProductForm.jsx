@@ -1,15 +1,23 @@
 import { useState, useEffect } from "react";
+import {Camera} from "lucide-react"; 
 
 function ProductForm({
   onSalvar,
   onCancelar,
   salvando = false,
+  categorias = [],
 }) {
   const [formulario, setFormulario] = useState({
     nome: "",
     descricao: "",
     preco: "",
   });
+
+  const [nomeCategoria, setNomeCategoria] = useState("");
+  const [modoCategoria, setModoCategoria] = useState("existente");
+
+  // Mantenha aqui os demais estados e funções que você já possui.
+
 
   const [variacoes, setVariacoes] = useState([
     { sku: "", cor: "", tamanho: "", estoque: "0", preco: "" },
@@ -35,6 +43,8 @@ function ProductForm({
       [name]: value,
     }));
   }
+
+ 
 
   function handleVariacaoChange(index, event) {
     const { name, value } = event.target;
@@ -136,11 +146,20 @@ function ProductForm({
         return;
       }
     }
+    if (!nomeCategoria.trim()) {
+  setErro(
+    modoCategoria === "existente"
+      ? "Selecione uma categoria."
+      : "Informe o nome da nova categoria."
+  );
+  return;
+}
 
     onSalvar({
       nome: formulario.nome.trim(),
       descricao: formulario.descricao.trim(),
       preco: Number(formulario.preco),
+      nomeCategoria: nomeCategoria.trim(),
       variacoes: variacoes.map((variacao) => ({
         sku: variacao.sku.trim(),
         cor: variacao.cor.trim(),
@@ -154,15 +173,15 @@ function ProductForm({
   }
 
   const campoClass =
-    "w-full rounded-lg border border-temp-1 bg-bege px-4 py-3 text-sm text-marrom-1 placeholder-marrom-1 outline-none transition focus:ring-2 focus:ring-temp-1/20";
+    "w-full rounded-lg   cursor-pointer  bg-bege px-4 py-3 text-sm text-marrom-1 placeholder-marrom-1 outline-none transition focus:ring-2 focus:ring-temp-";
 
   const labelClass =
-    "mb-2 block text-sm font-semibold text-temp-1";
+    "mb-2 block text-sm font-semibold text-temp-marrom-1";
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-xl border border-temp-1 bg-white p-6 font-['Poppins']"
+      className="space-y-5 rounded-xl border border-[#ebc4b8] bg-white p-6 font-['Poppins']"
     >
       <div>
         <h2 className="text-xl font-semibold text-temp-1">
@@ -197,6 +216,57 @@ function ProductForm({
         />
       </div>
 
+
+      
+    <div>
+      <label htmlFor="modoCategoria" className={labelClass}>
+        Categoria *
+      </label>
+
+      <select
+        id="modoCategoria"
+        value={modoCategoria}
+        onChange={(event) => {
+          setModoCategoria(event.target.value);
+          setNomeCategoria("");
+        }}
+        className={campoClass}
+      >
+        <option value="existente">Selecionar categoria existente</option>
+        <option value="nova">Criar nova categoria</option>
+      </select>
+
+      {modoCategoria === "existente" ? (
+        <select
+          id="nomeCategoria"
+          value={nomeCategoria}
+          onChange={(event) => setNomeCategoria(event.target.value)}
+          className={`${campoClass} mt-3`}
+          required
+        >
+          <option value="">Selecione uma categoria</option>
+
+          {categorias.map((categoria) => (
+            <option key={categoria.id} value={categoria.nome}>
+              {categoria.nome}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <input
+          id="nomeCategoria"
+          type="text"
+          value={nomeCategoria}
+          onChange={(event) => setNomeCategoria(event.target.value)}
+          placeholder="Ex.: Camisetas, Calças, Acessórios"
+          className={`${campoClass} mt-3`}
+          maxLength={100}
+          required
+        />
+      )}
+    </div>
+
+
       <div>
         <label htmlFor="descricao" className={labelClass}>
           Descrição
@@ -230,7 +300,7 @@ function ProductForm({
               />
             ) : (
               <>
-                <span className="text-4xl">📷</span>
+                <span className="text-4xl text-marrom-1 "><Camera size={40}/></span>
                 <span className="text-sm font-medium text-temp-1">
                   Clique para selecionar uma imagem
                 </span>

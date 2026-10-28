@@ -1,5 +1,4 @@
 
-
 import { useEffect, useState } from "react";
 
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -13,59 +12,75 @@ import {
   listarProdutos,
 } from "../../services/productService";
 
+import {
+  listarCategorias,
+  cadastrarCategoria,
+} from "../../services/categoriaService";
+
 function Catalog() {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [produtos, setProdutos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [salvando, setSalvando] = useState(false);
   const [erro, setErro] = useState("");
   const [sucesso, setSucesso] = useState("");
 
- 
+  async function carregarProdutos() {
+    setCarregando(true);
+    setErro("");
 
+    try {
+      const resultado = await listarProdutos();
 
+      const lista = Array.isArray(resultado)
+        ? resultado
+        : Array.isArray(resultado?.content)
+          ? resultado.content
+          : null;
 
-async function carregarProdutos() {
-  setCarregando(true);
-  setErro("");
+      if (lista === null) {
+        throw new Error(
+          "A API não retornou uma lista de produtos válida."
+        );
+      }
 
-  try {
-    const resultado = await listarProdutos();
-
-    console.log("Resultado completo:", resultado);
-    console.log("Tipo:", typeof resultado);
-    console.log("É array?", Array.isArray(resultado));
-
-    const lista = Array.isArray(resultado)
-      ? resultado
-      : Array.isArray(resultado?.content)
-        ? resultado.content
-        : null;
-
-    if (lista === null) {
-      console.error("Formato inesperado recebido:", resultado);
-      throw new Error(
-        "A API não retornou uma lista de produtos válida."
-      );
+      setProdutos(lista);
+    } catch (error) {
+      console.error("Erro ao carregar produtos:", error);
+      setErro(error.message || "Não foi possível carregar os produtos.");
+      setProdutos([]);
+    } finally {
+      setCarregando(false);
     }
-
-    console.log("Quantidade:", lista.length);
-    console.table(lista);
-
-    setProdutos(lista);
-  } catch (error) {
-    console.error("Erro ao carregar produtos:", error);
-    setErro(error.message || "Não foi possível carregar os produtos.");
-    setProdutos([]);
-  } finally {
-    setCarregando(false);
   }
-}
 
+  async function carregarCategorias() {
+    try {
+      const resultado = await listarCategorias();
+
+      if (!Array.isArray(resultado)) {
+        throw new Error(
+          "A API não retornou uma lista de categorias válida."
+        );
+      }
+
+      setCategorias(resultado);
+    } catch (error) {
+      console.error("Erro ao carregar categorias:", error);
+      setErro(error.message || "Não foi possível carregar as categorias.");
+    }
+  }
 
   useEffect(() => {
     carregarProdutos();
+    carregarCategorias();
   }, []);
+
+  function handleCancelar() {
+    setMostrarFormulario(false);
+    setErro("");
+  }
 
   async function handleSalvarProduto(dadosProduto) {
     setSalvando(true);
@@ -73,13 +88,48 @@ async function carregarProdutos() {
     setSucesso("");
 
     try {
-      await cadastrarProduto(dadosProduto);
+      const nomeCategoria = dadosProduto.nomeCategoria?.trim();
+
+      if (!nomeCategoria) {
+        throw new Error("Selecione ou informe uma categoria.");
+      }
+
+      // Procura uma categoria com o mesmo nome, ignorando maiúsculas
+      // e espaços extras.
+      let categoria = categorias.find(
+        (item) =>
+          item.nome?.trim().toLocaleLowerCase("pt-BR") ===
+          nomeCategoria.toLocaleLowerCase("pt-BR")
+      );
+
+      // Se não existir, cadastra a categoria primeiro.
+      if (!categoria) {
+        categoria = await cadastrarCategoria(nomeCategoria);
+
+        if (!categoria?.id) {
+          throw new Error(
+            "A categoria foi enviada, mas a resposta não contém seu ID. Confira o formato de CategoriaResponse."
+          );
+        }
+
+        setCategorias((anteriores) => [...anteriores, categoria]);
+      }
+
+      // O backend atual recebe o nome da categoria no produto.
+      await cadastrarProduto({
+        ...dadosProduto,
+        nomeCategoria: categoria.nome,
+      });
 
       setSucesso("Produto cadastrado com sucesso!");
       setMostrarFormulario(false);
 
-      await carregarProdutos();
+      await Promise.all([
+        carregarProdutos(),
+        carregarCategorias(),
+      ]);
     } catch (error) {
+      console.error("Erro ao cadastrar produto:", error);
       setErro(error.message || "Não foi possível cadastrar o produto.");
     } finally {
       setSalvando(false);
@@ -87,7 +137,7 @@ async function carregarProdutos() {
   }
 
   return (
-    <div className="flex h-screen ">
+    <div className="flex h-screen">
       <Sidebar />
 
       <main className="min-w-0 flex-1 overflow-y-auto p-6 md:p-8">
@@ -120,11 +170,11 @@ async function carregarProdutos() {
             </div>
           )}
 
-
           {mostrarFormulario && (
             <ProductForm
+              categorias={categorias}
               onSalvar={handleSalvarProduto}
-              onCancelar={() => setMostrarFormulario(false)}
+              onCancelar={handleCancelar}
               salvando={salvando}
             />
           )}

@@ -3,6 +3,7 @@ import {
     Clock3,
     Truck,
     CircleCheck,
+    TrendingUp,
 } from "lucide-react";
 
 function StatCard({
@@ -19,12 +20,14 @@ function StatCard({
     changeColor,
     descriptionColor,
 
+
 }) {
     return (
         <div
-            className="font-['Poppins'] group border border-bege hover:border-white  min-w-0 rounded-lg p-4 sm:p-5 cursor-pointer transition-colors duration-300"
+            className="font-['Poppins'] group border border-bege  min-w-0 rounded-xl p-4 sm:p-5 cursor-pointer transition duration-300  hover:-translate-y-1 hover:border-[#EBC4B8] hover:shadow-md"
             style={{
                 backgroundColor: cardBg,
+                borderColor: iconBg,
             }}
             onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = cardHoverBg;
@@ -36,11 +39,12 @@ function StatCard({
             <div className="flex items-start gap-3 sm:gap-5">
                 {/* Ícone */}
                 <div
-                    className=" flex h-11 w-11 shrink-0 items-center  justify-center rounded-lg transition-colors duration-300"
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#FCEAE7] text-[#B51B00]"
+
                     style={{ backgroundColor: iconBg }}
                 >
                     <Icon
-                        size={30}
+                        size={25}
                         style={{ color: iconColor }}
                         className="shrink-0 transition-colors duration-300 "
                     />
@@ -48,12 +52,12 @@ function StatCard({
 
                 {/* Título e valor */}
                 <div className="min-w-0 flex  flex-col ">
-                    <p
-                        className="mt-2 text-2xl font-semibold transition-colors duration-300 group-hover:!text-white"
+                    <h2
+                        className="mt-2 md:text-xl sm:ext-xs font-bold transition-colors duration-300 group-hover:!text-white"
                         style={{ color: valueColor }}
                     >
                         {value}
-                    </p>
+                    </h2>
                     <p
                         className="text-sm font-semibold transition-colors duration-300 group-hover:!text-white"
                         style={{ color: titleColor }}
@@ -66,19 +70,19 @@ function StatCard({
             </div>
 
             {/* Porcentagem e descrição */}
-            <div className="mt-4 flex flex-wrap  items-center gap-2 text-xs">
+            <div className="mt-3 flex flex-wrap  items-center gap-2 text-xs">
                 <span
                     className="font-semibold transition-colors duration-300 group-hover:!text-white"
                     style={{ color: changeColor }}
                 >
-                    ↗ {change}
+                    <TrendingUp size={15} />
                 </span>
 
                 <span
                     className="transition-colors font-semibold duration-300 group-hover:!text-white"
                     style={{ color: descriptionColor }}
                 >
-                    Em relação ao mês anterior
+                    {change}  Em relação ao mês anterior
                 </span>
             </div>
         </div>
@@ -94,12 +98,12 @@ export default function OrderCards() {
             change: "+12%",
             //colors
             cardBg: "#fff",
-            cardHoverBg: "#2563EB",
-            iconColor: "#2563EB",
-            iconBg: "#DBEAFE",
+            cardHoverBg: "#6B21A8",
+            iconColor: "#6B21A8",
+            iconBg: "#F3E8FF",
 
             titleColor: "#5a463b",
-            valueColor: "#2563EB",
+            valueColor: "#6B21A8",
             changeColor: "#047857",
             descriptionColor: "#a99c8e",
             hoverTextColor: "#FFFFFF",
@@ -112,12 +116,12 @@ export default function OrderCards() {
             change: "+3%",
             //colors
             cardBg: "white",
-            cardHoverBg: "#B51B00",
-            iconColor: "#B51B00",
-            iconBg: "#FBE5DF",
+            cardHoverBg: "#FE9A00",
+            iconColor: "#FE9A00",
+            iconBg: "#FEF3C6",
 
             titleColor: "#5a463b",
-            valueColor: "#B51B00",
+            valueColor: "#FE9A00",
             changeColor: "#047857",
             descriptionColor: "#a99c8e",
             hoverTextColor: "#FFFFFF",
@@ -131,12 +135,12 @@ export default function OrderCards() {
             change: "+8%",
             //colors
             cardBg: "white",
-            cardHoverBg: "oklch(76.9% 0.188 70.08)",
-            iconColor: "oklch(76.9% 0.188 70.08)",
-            iconBg: "oklch(96.2% 0.059 95.617)",
+            cardHoverBg: "#2563EB ",
+            iconColor: "#2563EB ",
+            iconBg: "#DBEAFE",
 
             titleColor: "#5a463b",
-            valueColor: "oklch(76.9% 0.188 70.08)",
+            valueColor: "#2563EB ",
             changeColor: "#047857",
             descriptionColor: "#a99c8e",
             hoverTextColor: "#FFFFFF",

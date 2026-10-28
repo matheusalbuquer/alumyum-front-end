@@ -28,14 +28,23 @@ function MessageList({ conversaId }) {
 
         if (!ativo) return;
 
+        
         const mensagensFormatadas = dados.map((mensagem) => ({
+          ...mensagem,
           id: mensagem.id,
           text: mensagem.conteudo ?? "",
+          
           imageUrl: mensagem.imagemUrl
             ? mensagem.imagemUrl.startsWith("http")
               ? mensagem.imagemUrl
-              : `http://localhost:8081${mensagem.imagemUrl}`
+              : `http://localhost:8080${
+                  mensagem.imagemUrl.startsWith("/") ? "" : "/"
+                }${mensagem.imagemUrl}`
             : null,
+
+          produtos: Array.isArray(mensagem.produtos)
+            ? mensagem.produtos
+            : [],
           sender:
             mensagem.remetente === "CLIENTE" ? "customer" : "agent",
           time: mensagem.createdAt

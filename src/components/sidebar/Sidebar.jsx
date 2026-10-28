@@ -1,13 +1,14 @@
-
 import {
   LayoutDashboard,
   MessageCircle,
   ShoppingBag,
   Package,
   BarChart3,
-  Bot,
+  Sparkles,
   Settings,
   QrCode,
+  Clipboard,
+  FileChartColumnIncreasing
 
 
 
@@ -34,17 +35,17 @@ function Sidebar() {
     },
     {
       label: "Pedidos",
-      icon: Package,
+      icon: Clipboard,
       path: "/orders",
     },
     {
       label: "Relatórios",
-      icon: BarChart3,
+      icon: FileChartColumnIncreasing,
       path: "/reports",
     },
     {
       label: "IA",
-      icon: Bot,
+      icon: Sparkles,
       path: "/ia",
     },
     {
@@ -60,7 +61,7 @@ function Sidebar() {
   ];
 
   return (
-    <aside className="flex sticky h-screen w-64 flex-col border-r border-temp-1 bg-white">
+    <aside className="flex sticky h-screen w-64 flex-col  shadow-md shadow-[#EBC4B8] bg-white">
       {/* Logo */}
       <div className="flex h-20 mb-4 items-center px-6 align-center gap-2 justify-start">
         <h1 className="font-['Fira Code'] text-xl font-bold text-temp-1">
@@ -74,7 +75,7 @@ function Sidebar() {
       </div>
 
       {/* Menu */}
-      <nav className="flex-1 px-3 ">
+      <nav className="flex-1 px-3 border-b border-[#EBC4B8]">
         {menuItems.map((item) => {
           const Icon = item.icon;
 
@@ -101,7 +102,7 @@ function Sidebar() {
       </nav>
 
       {/* Usuário */}
-      <div className="border-t border-temp-1 p-4">
+      <div className=" p-4">
         <div className=" flex items-center gap-3">
           <div className="cursor-pointer hover:border border-temp-1 flex h-9 w-9 items-center justify-center rounded-full bg-bege text-sm font-semibold text-temp-1">
             M

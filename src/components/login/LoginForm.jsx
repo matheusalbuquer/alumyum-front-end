@@ -48,7 +48,7 @@ function LoginForm() {
     <div className="flex min-h-screen items-center justify-center  px-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm rounded-2xl border border-temp-1 bg-white p-8 shadow-2xl"
+        className="w-full max-w-sm rounded-2xl border border-[#EBC4B8] bg-white p-8 shadow-2xl"
       >
         {/* Logo */}
         <div className="  mb-8 flex flex-col items-center">
@@ -73,7 +73,7 @@ function LoginForm() {
         <div className=" mb-5 font-['Poppins']">
           <label
             htmlFor="email"
-            className="mb-2 block text-sm font-semibold text-temp-1"
+            className="mb-2 block text-sm font-semibold text-marrom-1"
           >
             E-mail
           </label>
@@ -85,7 +85,7 @@ function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className=" w-full rounded-lg border border-temp-1 bg-bege px-4 py-3 text-sm text-marrom-1 placeholder-marrom-1 outline-none transition focus:border-temp-1 "
+            className=" w-full rounded-lg placeholder:bg-bege bg-bege px-4 py-3 text-sm text-marrom-1 placeholder-marrom-1 outline-none transition focus:border-temp-1 "
           />
         </div>
 
@@ -93,7 +93,7 @@ function LoginForm() {
         <div className="font-['Poppins'] mb-2 ">
           <label
             htmlFor="password"
-            className="mb-2 block text-sm font-medium text-temp-1"
+            className="mb-2 block text-sm font-medium text-marrom-1"
           >
             Senha
           </label>
@@ -105,7 +105,7 @@ function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className=" w-full rounded-lg border border-temp-1 bg-bege px-4 py-3 text-sm text-marrom-1 placeholder-marrom-1 outline-none transition focus:border-temp-1 "
+            className=" w-full rounded-lg bg-bege px-4 py-3 text-sm text-marrom-1 placeholder-marrom-1 outline-none transition focus:border-temp-1 "
           />
         </div>
 
@@ -127,14 +127,14 @@ function LoginForm() {
         </div>
 
         {/* Entrar */}
-       
-<button
-  type="submit"
-  disabled={loading}
-  className="font-['Poppins'] w-full rounded-lg bg-bege px-6 py-3 text-sm font-semibold text-temp-1 transition hover:bg-temp-1 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
->
-  {loading ? "Entrando..." : "Entrar"}
-</button>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="font-['Poppins'] cursor-pointer w-full rounded-lg bg-bege px-6 py-3 text-sm font-semibold text-temp-1 transition hover:bg-temp-1 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {loading ? "Entrando..." : "Entrar"}
+        </button>
 
 
         {/* Cadastro */}

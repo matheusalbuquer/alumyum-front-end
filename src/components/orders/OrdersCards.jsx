@@ -24,7 +24,7 @@ function StatCard({
 }) {
     return (
         <div
-            className="font-['Poppins'] group border border-bege  min-w-0 rounded-xl p-4 sm:p-5 cursor-pointer transition duration-300  hover:-translate-y-1 hover:border-[#EBC4B8] hover:shadow-md"
+            className="font-['Poppins']  group border border-bege  min-w-0 rounded-xl p-4 sm:p-5 cursor-pointer transition duration-300  hover:-translate-y-1 hover:border-[#EBC4B8] hover:shadow-md"
             style={{
                 backgroundColor: cardBg,
                 borderColor: iconBg,
@@ -36,7 +36,7 @@ function StatCard({
                 e.currentTarget.style.backgroundColor = cardBg;
             }}
         >
-            <div className="flex items-start gap-3 sm:gap-5">
+            <div className="flex  items-start gap-3 sm:gap-5">
                 {/* Ícone */}
                 <div
                     className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#FCEAE7] text-[#B51B00]"

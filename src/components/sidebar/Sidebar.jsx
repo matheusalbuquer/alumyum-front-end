@@ -8,7 +8,7 @@ import {
   Settings,
   QrCode,
   Clipboard,
-  FileChartColumnIncreasing
+  File,
 
 
 
@@ -40,7 +40,7 @@ function Sidebar() {
     },
     {
       label: "Relatórios",
-      icon: FileChartColumnIncreasing,
+      icon: File,
       path: "/reports",
     },
     {

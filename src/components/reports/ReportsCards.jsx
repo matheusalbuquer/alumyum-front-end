@@ -1,59 +1,176 @@
 import {
-    FileText,
-    DollarSign,
-    ShoppingBag,
+    ClipboardList,
+    FileChartColumnIncreasing,
+    Banknote,
     TrendingUp,
-    TrendingUp as ArrowUp,
 } from "lucide-react";
 
-import { indicadores } from "./data/reports";
 
-const icones = {
-    file: FileText,
-    dollar: DollarSign,
-    bag: ShoppingBag,
-    trend: TrendingUp,
-};
+
+function StatCard({
+    title,
+    value,
+    icon: Icon,
+    change,
+    cardBg,
+    cardHoverBg,
+    iconColor,
+    iconBg,
+    titleColor,
+    valueColor,
+    changeColor,
+    descriptionColor,
+}) {
+    return (
+        <div
+            className="font-['Poppins']  group border border-bege  min-w-0 rounded-xl p-4 sm:p-5 cursor-pointer transition duration-300  hover:-translate-y-1 hover:border-[#EBC4B8] hover:shadow-md"
+            style={{
+                backgroundColor: cardBg,
+                borderColor: iconBg,
+            }}
+            onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = cardHoverBg;
+            }}
+            onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = cardBg;
+            }}>
+
+            <div className="flex  items-start gap-3 sm:gap-5">
+                {/* Ícone */}
+                <div
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#FCEAE7] text-[#B51B00]"
+
+                    style={{ backgroundColor: iconBg }}
+                >
+                    <Icon
+                        size={25}
+                        style={{ color: iconColor }}
+                        className="shrink-0 transition-colors duration-300 "
+                    />
+                </div>
+
+                {/* Título e valor */}
+                <div className="min-w-0 flex  flex-col ">
+                    <h2
+                        className="mt-2 md:text-xl sm:ext-xs font-bold transition-colors duration-300 group-hover:!text-white"
+                        style={{ color: valueColor }}
+                    >
+                        {value}
+                    </h2>
+                    <p
+                        className="text-sm font-semibold transition-colors duration-300 group-hover:!text-white"
+                        style={{ color: titleColor }}
+                    >
+                        {title}
+                    </p>
+
+
+                </div>
+            </div>
+
+            {/* Porcentagem e descrição */}
+            <div className="mt-3 flex flex-wrap  items-center gap-2 text-xs">
+                <span
+                    className="font-semibold transition-colors duration-300 group-hover:!text-white"
+                    style={{ color: changeColor }}
+                >
+                    <TrendingUp size={15} />
+                </span>
+
+                <span
+                    className="transition-colors font-semibold duration-300 group-hover:!text-white"
+                    style={{ color: descriptionColor }}
+                >
+                    {change}  Em relação ao mês anterior
+                </span>
+            </div>
+        </div>
+    );
+}
+
 
 export default function ReportsCards() {
+    const cards = [
+        {
+            title: "Total",
+            value: "12",
+            icon: FileChartColumnIncreasing,
+            change: "+20%",
+            //colors
+            cardBg: "#fff",
+            cardHoverBg: "#6B21A8",
+            iconColor: "#6B21A8",
+            iconBg: "#F3E8FF",
+
+            titleColor: "#5a463b",
+            valueColor: "#6B21A8",
+            changeColor: "#047857",
+            descriptionColor: "#a99c8e",
+            hoverTextColor: "#FFFFFF",
+
+        },
+
+        {
+            title: "Pedidos",
+            value: "342",
+            icon: ClipboardList,
+            change: "+8%",
+            //colors
+            cardBg: "white",
+            cardHoverBg: "#FE9A00 ",
+            iconColor: "#FE9A00 ",
+            iconBg: "#FEF3C6",
+
+            titleColor: "#5a463b",
+            valueColor: "#FE9A00 ",
+            changeColor: "#047857",
+            descriptionColor: "#a99c8e",
+            hoverTextColor: "#FFFFFF",
+
+        },
+        {
+            title: "Vendas",
+            value: "R$ 12.450,00",
+            icon: Banknote,
+            change: "+15%",
+            //colors
+            cardBg: "white",
+            cardHoverBg: " #2563EB",
+            iconColor: " #2563EB",
+            iconBg: "#DBEAFE",
+
+            titleColor: "#5a463b",
+            valueColor: " #2563EB",
+            changeColor: "#047857",
+            descriptionColor: "#a99c8e",
+            hoverTextColor: "#FFFFFF",
+
+
+        },
+        {
+            title: "Crescimento",
+            value: "18%",
+            icon: TrendingUp,
+            change: "+6%",
+            //colors
+            cardBg: "white",
+            cardHoverBg: "#047857",
+            iconColor: "#047857",
+            iconBg: "#D1FAE5",
+
+            titleColor: "#5a463b",
+            valueColor: "#047857",
+            changeColor: "#047857",
+            descriptionColor: "#a99c8e",
+            hoverTextColor: "#FFFFFF",
+
+        },
+    ];
     return (
-        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {indicadores.map((item) => {
-                const Icon = icones[item.icone];
-
-                return (
-                    <article
-                        key={item.titulo}
-                        className="font-['Poppins'] cscursor-pointer rounded-xl border border-[#E5E5E5] bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-[#EBC4B8] hover:shadow-md"
-                    >
-                        <div className="flex items-center gap-4">
-                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#FCEAE7] text-[#B51B00]">
-                                <Icon size={25} />
-                            </div>
-
-                            <h2 className="mt-3 text-2xl font-bold text-marrom-2">
-                                {item.valor}
-                            </h2>
-                        </div>
-
-
-                        <p className="text-sm text-[#6B7280]">
-                            {item.titulo}
-                        </p>
-
-                        <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
-                            <span className="flex items-center gap-1 font-bold text-[#218653]">
-                                <ArrowUp size={15} />
-                                {item.crescimento}
-                            </span>
-
-                            <span className="text-[#808080]">
-                                {item.descricao}
-                            </span>
-                        </div>
-                    </article>
-                );
-            })}
+        <section className="mb-7 grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-4">
+            {cards.map((card) => (
+                <StatCard key={card.title} {...card} />
+            ))}
         </section>
     );
 }

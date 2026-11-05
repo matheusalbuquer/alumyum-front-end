@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-    ChartNoAxesColumnDecreasing
+    FilePlusCorner
 } from "lucide-react"
 function ReportsHeader() {
     return (
@@ -19,7 +19,7 @@ function ReportsHeader() {
 
                 className="flex gap-2 justify-center align-center cursor-pointer font-['Poppins'] rounded-lg bg-bege px-5 py-3 text-sm font-semibold text-temp-1 transition hover:bg-temp-1 hover:text-white"
             >
-                < ChartNoAxesColumnDecreasing />
+                <FilePlusCorner />
                 Novo relatório
             </button>
 

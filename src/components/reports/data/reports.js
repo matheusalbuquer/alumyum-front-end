@@ -1,10 +1,17 @@
 export const indicadores = [
     {
-        titulo: "Total de relatórios",
+        titulo: "Total",
         valor: "12",
         crescimento: "+20%",
         descricao: "em relação ao mês anterior",
         icone: "file",
+    },
+    {
+        titulo: "Pedidos",
+        valor: "342",
+        crescimento: "+8%",
+        descricao: "em relação ao mês anterior",
+        icone: "list",
     },
     {
         titulo: "Vendas",
@@ -12,13 +19,6 @@ export const indicadores = [
         crescimento: "+15%",
         descricao: "em relação ao mês anterior",
         icone: "dollar",
-    },
-    {
-        titulo: "Pedidos",
-        valor: "342",
-        crescimento: "+8%",
-        descricao: "em relação ao mês anterior",
-        icone: "bag",
     },
     {
         titulo: "Crescimento",

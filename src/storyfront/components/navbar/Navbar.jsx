@@ -7,22 +7,30 @@ import {
     Menu,
 } from "lucide-react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import { useCarrinho } from "../../context/CardContext";
 
 function Navbar() {
+    const { slug } = useParams();
+    const { itens } = useCarrinho();
+
+    const quantidadeItens = itens.reduce(
+        (total, item) => total + item.quantidade,
+        0
+    );
+
     const links = [
-        { label: "Início", path: "/" },
-        { label: "Produtos", path: "/products" },
-        { label: "Categorias", path: "/categories" },
-        { label: "Sobre", path: "/about" },
+        { label: "Início", path: `/${slug}` },
+        { label: "Produtos", path: `/${slug}/products` },
+        { label: "Categorias", path: `/${slug}/categories` },
+        { label: "Sobre", path: `/${slug}/about` },
     ];
 
     return (
         <header className="font-['Poppins'] fixed left-0 top-0 z-50 h-[70px] w-full border-b border-gray-200 bg-white">
             <nav className="flex h-full items-center justify-between gap-5 px-5 lg:px-10">
 
-                {/* Logo */}
-                <NavLink to="/vitrine" className="flex shrink-0 items-center gap-2">
+                <NavLink to={`/${slug}`} className="flex shrink-0 items-center gap-2">
                     <svg
                         width="35"
                         height="35"
@@ -42,13 +50,12 @@ function Navbar() {
                     </span>
                 </NavLink>
 
-                {/* Navegação */}
                 <div className="hidden items-center gap-2 xl:flex">
                     {links.map((item) => (
                         <NavLink
                             key={item.path}
                             to={item.path}
-                            end={item.path === "/"}
+                            end={item.label === "Início"}
                             className={({ isActive }) =>
                                 `rounded-full px-4 py-2 text-sm transition ${isActive
                                     ? "bg-[#F9EEE9] font-boldx' text-temp-1"
@@ -61,10 +68,8 @@ function Navbar() {
                     ))}
                 </div>
 
-                {/* Pesquisa */}
                 <div className="hidden max-w-[480px] flex-1 items-center gap-3 rounded-xl border border-gray-300 bg-[#FAF8F7] px-4 py-2.5 md:flex">
                     <Search size={20} className="shrink-0 text-gray-500" />
-
                     <input
                         type="text"
                         placeholder="Buscar produtos, categorias ou marcas..."
@@ -72,11 +77,10 @@ function Navbar() {
                     />
                 </div>
 
-                {/* Ações */}
                 <div className="flex shrink-0 items-center gap-3 lg:gap-5">
 
                     <NavLink
-                        to="/help"
+                        to={`/${slug}/help`}
                         className="flex cursor-pointer items-center gap-2 text-gray-800 hover:text-[#A8320D]"
                     >
                         <CircleHelp size={22} />
@@ -94,15 +98,17 @@ function Navbar() {
                     </a>
 
                     <NavLink
-                        to="/cart"
+                        to={`/${slug}/cart`}
                         aria-label="Carrinho"
                         className="relative cursor-pointer p-2 text-[#A8320D] hover:opacity-70"
                     >
                         <ShoppingCart size={26} />
 
-                        <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-600 px-1 text-xs text-white">
-                            2
-                        </span>
+                        {quantidadeItens > 0 && (
+                            <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-600 px-1 text-xs text-white">
+                                {quantidadeItens}
+                            </span>
+                        )}
                     </NavLink>
 
                     <button

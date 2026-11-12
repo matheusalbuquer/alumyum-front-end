@@ -8,12 +8,16 @@ export async function api(endpoint, options = {}) {
         ...options.headers,
     };
 
-    if (!(options.body instanceof FormData)) {
+    const temBody = options.body !== undefined && options.body !== null;
+    const ehFormData = temBody && options.body instanceof FormData;
+
+    // Só define Content-Type quando existe corpo na requisição.
+    if (temBody && !ehFormData) {
         headers["Content-Type"] = "application/json";
     }
 
-    // Não envia um JWT antigo para o login.
-    const endpointPublico = endpoint === "/auth/login";
+    // Rotas públicas não precisam receber JWT.
+    const endpointPublico = endpoint.startsWith("/api/publico/");
 
     if (token && !endpointPublico) {
         headers.Authorization = `Bearer ${token}`;

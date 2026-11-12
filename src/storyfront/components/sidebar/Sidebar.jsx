@@ -6,6 +6,7 @@ import {
     LayoutGrid,
     Shirt,
     BriefcaseBusiness,
+
     ShoppingBag,
     MoreHorizontal,
     ClipboardList,
@@ -43,7 +44,7 @@ function Sidebar() {
             <nav className="flex-1 space-y-1">
 
                 {/* Links principais */}
-                <NavLink to="/" end className={linkStyle}>
+                <NavLink to="/vitrine" end className={linkStyle}>
                     <Home size={21} />
                     <span>Início</span>
                 </NavLink>

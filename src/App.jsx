@@ -13,6 +13,9 @@ import Ia from "./pages/ia/Ia"
 import Whatsapp from "./pages/whatsapp/Whatsapp";
 import Settings from "./pages/settings/Settings";
 
+//Super Admin
+import DashboardSuperAdmin from "./superadmfront/pages/SuperAdm";
+
 //Vitrine
 import Home from "./storyfront/pages/vitrine/Home";
 
@@ -21,7 +24,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/**Dashboard**/}
+        {/*Dashboard*/}
         <Route path="/" element={<Login />} />
 
         <Route path="/dashboard" element={<Dashboard />} />
@@ -39,6 +42,9 @@ function App() {
         <Route path="/whatsapp" element={<Whatsapp />} />
 
         <Route path="/settings" element={<Settings />} />
+
+        {/*Super Admin*/}
+        <Route path="/superadmin" element={<DashboardSuperAdmin />} />
 
         {/*Vitrine*/}
         <Route path="/vitrine" element={<Home />} />

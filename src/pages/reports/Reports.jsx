@@ -37,7 +37,7 @@ export default function Reports() {
         alert("Aqui você poderá abrir o formulário de novo relatório.");
     }
     return (
-        <div className="flex min-h-screen bg-white">
+        <div className="flex h-screen bg-white">
             <Sidebar />
             <main className="min-w-0 flex-1 overflow-y-auto p-6 md:p-8">
                 <div className=' mx-auto max-w-7xl space-y-8'>

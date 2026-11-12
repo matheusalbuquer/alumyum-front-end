@@ -22,7 +22,7 @@ function Navbar() {
             <nav className="flex h-full items-center justify-between gap-5 px-5 lg:px-10">
 
                 {/* Logo */}
-                <NavLink to="/" className="flex shrink-0 items-center gap-2">
+                <NavLink to="/vitrine" className="flex shrink-0 items-center gap-2">
                     <svg
                         width="35"
                         height="35"
@@ -51,7 +51,7 @@ function Navbar() {
                             end={item.path === "/"}
                             className={({ isActive }) =>
                                 `rounded-full px-4 py-2 text-sm transition ${isActive
-                                    ? "bg-[#F9EEE9] font-bold text-temp-1"
+                                    ? "bg-[#F9EEE9] font-boldx' text-temp-1"
                                     : "text-gray-800 hover:bg-[#F9EEE9] hover:text-temp-1"
                                 }`
                             }

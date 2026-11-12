@@ -104,9 +104,12 @@ function Sidebar() {
       {/* Usuário */}
       <div className=" p-4">
         <div className=" flex items-center gap-3">
-          <div className="cursor-pointer hover:border border-temp-1 flex h-9 w-9 items-center justify-center rounded-full bg-bege text-sm font-semibold text-temp-1">
-            M
-          </div>
+          <NavLink to="/superadmin">
+            <div className="cursor-pointer hover:border border-temp-1 flex h-9 w-9 items-center justify-center rounded-full bg-bege text-sm font-semibold text-temp-1">
+              M
+            </div>
+          </NavLink>
+
 
           <div>
             <p className="font-['Poppins'] text-sm font-semibold text-temp-1">Matheus</p>
